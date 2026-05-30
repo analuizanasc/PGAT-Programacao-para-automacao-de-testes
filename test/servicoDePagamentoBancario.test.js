@@ -2,7 +2,51 @@ import ServicoDePagamentoBancario from "../src/servicoDePagamentosBancario.js";
 import assert from 'node:assert';
 
 describe('Classe de Servico de Pagamentos Bancária', () => {
+
     describe('Realizar Pagamento', () => {
+
+        describe('Schema do retorno de realizarPagamento', () => {
+            let resposta;
+
+            before(() => {
+                const servicoDePagamentoBancario = new ServicoDePagamentoBancario();
+                servicoDePagamentoBancario.realizarPagamento('0987-7656-3475', 'Samar', 156.87);
+                resposta = servicoDePagamentoBancario.consultarUltimoPagamento();
+            });
+
+            it('deve ter a propriedade codigoBarras', () => {
+                assert.ok(Object.hasOwn(resposta, 'codigoBarras'));
+            });
+
+            it('deve ter a propriedade empresa', () => {
+                assert.ok(Object.hasOwn(resposta, 'empresa'));
+            });
+
+            it('deve ter a propriedade valor', () => {
+                assert.ok(Object.hasOwn(resposta, 'valor'));
+            });
+
+            it('deve ter a propriedade categoria', () => {
+                assert.ok(Object.hasOwn(resposta, 'categoria'));
+            });
+
+            it('codigoBarras deve ser do tipo string', () => {
+                assert.strictEqual(typeof resposta.codigoBarras, 'string');
+            });
+
+            it('empresa deve ser do tipo string', () => {
+                assert.strictEqual(typeof resposta.empresa, 'string');
+            });
+
+            it('valor deve ser do tipo number', () => {
+                assert.strictEqual(typeof resposta.valor, 'number');
+            });
+
+            it('categoria deve ser do tipo string', () => {
+                assert.strictEqual(typeof resposta.categoria, 'string');
+            });
+        });
+
         it('Ao realizar pagamento maior que 100,00 deve ser mostrado categoria cara', () => {
             //arrange
             const servicoDePagamentoBancario = new ServicoDePagamentoBancario();
@@ -18,6 +62,7 @@ describe('Classe de Servico de Pagamentos Bancária', () => {
             //assert
             assert.equal(resposta.categoria, resultadoEsperado)
         });
+
         it('Ao realizar pagamento menor que 100,00 deve ser mostrado categoria padrão', () => {
             //arrange
             const servicoDePagamentoBancario = new ServicoDePagamentoBancario();
@@ -33,6 +78,7 @@ describe('Classe de Servico de Pagamentos Bancária', () => {
             //assert
             assert.equal(resposta.categoria, resultadoEsperado)
         });
+
         it('Ao realizar pagamento igual a 100,00 deve ser mostrado categoria padrão', () => {
             //arrange
             const servicoDePagamentoBancario = new ServicoDePagamentoBancario();
@@ -99,6 +145,49 @@ describe('Classe de Servico de Pagamentos Bancária', () => {
     })
 
     describe('Consultar Último Pagamento', () => {
+
+        describe('Schema do retorno de consultarUltimoPagamento', () => {
+            let resposta;
+
+            before(() => {
+                const servicoDePagamentoBancario = new ServicoDePagamentoBancario();
+                servicoDePagamentoBancario.realizarPagamento('0987-7656-3475', 'Samar', 156.87);
+                resposta = servicoDePagamentoBancario.consultarUltimoPagamento();
+            });
+
+            it('deve ter a propriedade codigoBarras', () => {
+                assert.ok(Object.hasOwn(resposta, 'codigoBarras'));
+            });
+
+            it('deve ter a propriedade empresa', () => {
+                assert.ok(Object.hasOwn(resposta, 'empresa'));
+            });
+
+            it('deve ter a propriedade valor', () => {
+                assert.ok(Object.hasOwn(resposta, 'valor'));
+            });
+
+            it('deve ter a propriedade categoria', () => {
+                assert.ok(Object.hasOwn(resposta, 'categoria'));
+            });
+
+            it('codigoBarras deve ser do tipo string', () => {
+                assert.strictEqual(typeof resposta.codigoBarras, 'string');
+            });
+
+            it('empresa deve ser do tipo string', () => {
+                assert.strictEqual(typeof resposta.empresa, 'string');
+            });
+
+            it('valor deve ser do tipo number', () => {
+                assert.strictEqual(typeof resposta.valor, 'number');
+            });
+
+            it('categoria deve ser do tipo string', () => {
+                assert.strictEqual(typeof resposta.categoria, 'string');
+            });
+        });
+
         it('Ao consultar o último pagamento com múltiplos pagamentos realizados deve retornar apenas o último', () => {
             //arrange
             const servicoDePagamentoBancario = new ServicoDePagamentoBancario();
