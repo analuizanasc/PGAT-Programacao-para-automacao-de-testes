@@ -39,6 +39,17 @@ export default class ServicoDePagamentoBancario {
     };
 
     realizarPagamento(codigoBarras, empresa, valor) {
+
+        if(codigoBarras == undefined || codigoBarras == null){
+            throw new Error('Código de barras deve ser informado')
+        }
+        if(empresa == undefined || empresa == null){
+            throw new Error('Empresa deve ser informada')
+        }
+        if(valor == undefined || valor == null || valor < 0){
+            throw new Error('Valor deve ser informado e não pode ser 0')
+        }
+
         if (valor > 100) {
 
             this.pagamentos.push(
